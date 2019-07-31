@@ -7,10 +7,9 @@ WORKDIR /src
 # Install packages using NPM 5 (bundled with the node:9 image)
 COPY ./package.json /src/package.json
 COPY ./package-lock.json /src/package-lock.json
-RUN npm install --silent           && \
-    addgroup -S -g 500 node         && \
-    adduser -S -u 500 -G node node   && \
-
+RUN npm install --silent         
+RUN addgroup -S -g 500 node         
+RUN adduser -S -u 500 -G node node  
 # Add application code
 COPY ./app /src/app
 COPY ./bin /src/bin
