@@ -7,9 +7,7 @@ WORKDIR /src
 # Install packages using NPM 5 (bundled with the node:9 image)
 COPY ./package.json /src/package.json
 COPY ./package-lock.json /src/package-lock.json
-RUN npm install --silent           
-RUN groupadd -g 500 node        
-RUN useradd -u 500 -G node node
+RUN npm install --silent              
 
 # Add application code
 COPY ./app /src/app
