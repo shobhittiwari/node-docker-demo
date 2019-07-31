@@ -8,8 +8,8 @@ WORKDIR /src
 COPY ./package.json /src/package.json
 COPY ./package-lock.json /src/package-lock.json
 RUN npm install --silent           
-RUN addgroup -S -g 500 node        
-RUN adduser -S -u 500 -G node node
+RUN groupadd -g 500 node        
+RUN useradd -u 500 -G node node
 
 # Add application code
 COPY ./app /src/app
