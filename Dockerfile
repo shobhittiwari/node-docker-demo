@@ -7,7 +7,9 @@ WORKDIR /src
 # Install packages using NPM 5 (bundled with the node:9 image)
 COPY ./package.json /src/package.json
 COPY ./package-lock.json /src/package-lock.json
-RUN npm install --silent
+RUN npm install --silent           && \
+    addgroup -S -g 500 node         && \
+    adduser -S -u 500 -G node node   && \
 
 # Add application code
 COPY ./app /src/app
@@ -22,6 +24,9 @@ ENV NODE_ENV development
 
 # Allows port 3000 to be publicly available
 EXPOSE 3000
+
+# Set user as non-privileged alternative to root
+USER node:node
 
 # The command uses nodemon to run the application
 CMD ["node", "node_modules/.bin/nodemon", "-L", "bin/www"]
