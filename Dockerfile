@@ -7,7 +7,7 @@ WORKDIR /src
 # Install packages using NPM 5 (bundled with the node:9 image)
 COPY ./package.json /src/package.json
 COPY ./package-lock.json /src/package-lock.json
-RUN npm install --silent              
+RUN  npm install --silent              
 
 # Add application code
 COPY ./app /src/app
@@ -19,8 +19,10 @@ COPY ./nodemon.json /src/nodemon.json
 
 FROM scratch
 
-COPY --from=build /src /
+RUN    mkdir /src
+COPY --from=build /src /src
 COPY --from=build /etc/passwd /etc/group /etc/
+COPY --from=build /usr/local/bin/node /
 
 # Set environment to "development" by default
 ENV NODE_ENV development
