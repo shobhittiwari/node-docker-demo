@@ -1,5 +1,5 @@
 # Specifies the base image we're extending
-FROM node:9
+FROM node:9 as build
 
 # Specify the "working directory" for the rest of the Dockerfile
 WORKDIR /src
@@ -16,6 +16,11 @@ COPY ./public /src/public
 
 # Add the nodemon configuration file
 COPY ./nodemon.json /src/nodemon.json
+
+FROM scratch
+
+COPY --from=build /src /
+COPY --from=build /etc/passwd /etc/group /etc/
 
 # Set environment to "development" by default
 ENV NODE_ENV development
